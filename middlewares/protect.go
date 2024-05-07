@@ -5,13 +5,14 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 	"github.com/woaitsAryan/stuneckt-task/cache"
 	"github.com/woaitsAryan/stuneckt-task/config"
 	"github.com/woaitsAryan/stuneckt-task/helpers"
 	"github.com/woaitsAryan/stuneckt-task/initializers"
 	"github.com/woaitsAryan/stuneckt-task/models"
-	"github.com/gofiber/fiber/v2"
-	"github.com/golang-jwt/jwt/v5"
 	"gorm.io/gorm"
 )
 
@@ -71,6 +72,10 @@ func Protect(c *fiber.Ctx) error {
 	user, err := verifyToken(tokenString, user)
 	if err != nil {
 		return err
+	}
+
+	if user.ID == uuid.Nil {
+		return &fiber.Error{Code: fiber.StatusUnauthorized, Message: "Invalid Token"}
 	}
 
 	c.Locals("loggedinUser", user)

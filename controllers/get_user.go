@@ -9,7 +9,7 @@ import (
 )
 
 func GetMe(c *fiber.Ctx) error {
-	user := c.Locals("user").(*models.User)
+	user := c.Locals("loggedinUser").(*models.User)
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"status":  "success",

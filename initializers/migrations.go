@@ -10,6 +10,7 @@ func AutoMigrate() {
 	fmt.Println("\nStarting Migrations...")
 	DB.AutoMigrate(
 		&models.User{},
+		&models.Post{},
 
 	)
 	fmt.Println("Migrations Finished!")
